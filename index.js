@@ -1,9 +1,9 @@
-import express from 'express';
-import axios from 'axios';
-import cheerio from 'cheerio';
-import dotenv from 'dotenv';
-import { CookieJar } from 'tough-cookie';
-import { wrapper } from 'axios-cookiejar-support';
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const dotenv = require('dotenv');
+const { CookieJar } = require('tough-cookie');
+const { wrapper } = require('axios-cookiejar-support');
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ async function loginAndFetchLatestText() {
         const latestText = $('tbody tr').first().find('td').eq(10).text().trim();
         return latestText;
     } catch (error) {
-        console.error('❌ Error in loginAndFetchLatestText:', error);
+        console.error('❌ Error in loginAndFetchLatestText:', error.message);
         return null;
     }
 }
