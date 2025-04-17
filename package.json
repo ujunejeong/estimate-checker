@@ -1,10 +1,10 @@
 {
   "name": "estimate-checker",
   "version": "1.0.0",
-  "description": "웹페이지를 확인하고 슬랙으로 알림을 보내는 서비스",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true"
   },
   "dependencies": {
     "axios": "^1.6.8",
