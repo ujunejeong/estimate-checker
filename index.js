@@ -31,8 +31,18 @@ async function loginAndFetchLatestText() {
 
         const response = await client.get(ESTIMATE_URL);
         const $ = cheerio.load(response.data);
-        const latestText = $('tbody tr').first().find('td').eq(10).text().trim();
-        return latestText;
+        const firstRow = $('tbody tr').first();
+        const tds = firstRow.find('td');
+
+        const result = {
+            latestText: tds.eq(10).text().trim(),       // 신청일
+            model: tds.eq(6).text().trim(),              // 차종
+            nickname: tds.eq(7).text().trim(),           // 동호회닉네임
+            region: tds.eq(8).text().trim(),             // 수리희망지역
+            phone: tds.eq(9).text().trim()               // 연락처
+        };
+
+        return result;
     } catch (error) {
         console.error('❌ Error in loginAndFetchLatestText:', error.message);
         return null;
@@ -40,9 +50,9 @@ async function loginAndFetchLatestText() {
 }
 
 app.get('/check', async (req, res) => {
-    const latestText = await loginAndFetchLatestText();
-    if (latestText) {
-        res.json({ latestText });
+    const data = await loginAndFetchLatestText();
+    if (data) {
+        res.json(data);
     } else {
         res.status(500).send('Failed to fetch latest text');
     }
