@@ -56,8 +56,8 @@ async function loginAndFetchLatestText() {
         const html = response.data;
 
         // 로그인 실패 추정 여부
-        if (html.includes('로그인') || html.includes('비밀번호') || html.includes('mb_password')) {
-            console.error('🚫 로그인 실패로 추정됩니다. HTML에 로그인 관련 텍스트가 포함되어 있습니다.');
+        if (html.includes('mb_password')) {
+            console.error('🚫 로그인 실패로 추정됩니다. 로그인 입력 폼이 그대로 있습니다.');
             return null;
         }
 
