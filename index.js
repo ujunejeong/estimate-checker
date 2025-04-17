@@ -35,11 +35,11 @@ async function loginAndFetchLatestText() {
         const tds = firstRow.find('td');
 
         const result = {
-            latestText: tds.eq(10).text().trim(),       // 신청일
-            model: tds.eq(6).text().trim(),              // 차종
-            nickname: tds.eq(7).text().trim(),           // 동호회닉네임
-            region: tds.eq(8).text().trim(),             // 수리희망지역
-            phone: tds.eq(9).text().trim()               // 연락처
+        latestText: tds.eq(9).text().trim(),      // 신청일
+        model: tds.eq(5).text().trim(),           // 차종
+        nickname: tds.eq(6).text().trim(),        // 동호회닉네임
+        region: tds.eq(7).text().trim(),          // 수리희망지역
+        phone: tds.eq(8).text().trim()            // 연락처
         };
 
         return result;
