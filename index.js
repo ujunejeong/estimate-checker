@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
+const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK;
 
 // 슬랙 테스트 전용
 app.get("/", async (req, res) => {
