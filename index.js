@@ -66,7 +66,10 @@ async function loginAndFetchLatestText() {
         const $ = cheerio.load(html);
         const firstRow = $('tbody tr').not('.sbn_img').first();
         const tds = firstRow.find('td');
-
+       
+        if (tds.length === 0) {
+    console.log('📦 전체 HTML 미리보기 (10000자):', html.slice(0, 10000));
+}
         console.log('🧪 tbody:', $('tbody').length);
         console.log('🧪 firstRow HTML:', firstRow.html());
         console.log('🧪 tds count:', tds.length);
