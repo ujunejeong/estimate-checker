@@ -43,7 +43,8 @@ async function loginAndFetchLatestText() {
         await client.get('https://estimate123.mycafe24.com/adm/'); // 🌟 세션 활성화를 위한 트리거
 
         console.log('📄 Fetching estimate list...');
-        const response = await client.get(ESTIMATE_URL);
+        const estimateResponse = await client.get(ESTIMATE_URL);
+        const html = estimateResponse.data;
 
         // 로그인 실패 추정 여부
         if (html.includes('로그인') || html.includes('비밀번호') || html.includes('mb_password')) {
