@@ -20,6 +20,7 @@ const client = wrapper(axios.create({ jar }));
 
 async function loginAndFetchLatestText() {
     try {
+        console.log('🔐 Logging in...');
         await client.post(LOGIN_URL, new URLSearchParams({
             mb_id: ADMIN_ID,
             mb_password: ADMIN_PW
@@ -29,22 +30,38 @@ async function loginAndFetchLatestText() {
             }
         });
 
+        console.log('📄 Fetching estimate list...');
         const response = await client.get(ESTIMATE_URL);
-        const $ = cheerio.load(response.data);
+        const html = response.data;
 
-        const firstRow = $('tbody tr').not('.sbn_img').first();  // 혹시 숨겨진 이미지용 tr 걸러냄
+        // 로그인 실패 여부 간단 체크
+        if (html.includes('로그인') || html.includes('비밀번호') || html.includes('mb_password')) {
+            console.error('🚫 로그인 실패로 추정됩니다. HTML에 로그인 관련 텍스트가 포함되어 있습니다.');
+            return null;
+        }
+
+        const $ = cheerio.load(html);
+        const firstRow = $('tbody tr').not('.sbn_img').first(); // 숨겨진 이미지용 tr 필터
         const tds = firstRow.find('td');
 
-        console.log('✅ firstRow HTML:', firstRow.html());
-        console.log('✅ tds count:', tds.length);
-        console.log('✅ tds values:', tds.map((i, el) => $(el).text().trim()).get());
+        // 디버깅 로그
+        console.log('🧪 tbody HTML 존재 여부:', $('tbody').length);
+        console.log('🧪 firstRow HTML:', firstRow.html());
+        console.log('🧪 tds count:', tds.length);
+        console.log('🧪 tds values:', tds.map((i, el) => $(el).text().trim()).get());
+
+        // 데이터 없는 경우 null 반환
+        if (tds.length < 10) {
+            console.warn('⚠️ 예상보다 td 개수가 부족합니다. 구조가 바뀌었거나 데이터가 없을 수 있습니다.');
+            return null;
+        }
 
         const result = {
-            latestText: tds.eq(9).text().trim(),  // 신청일
-            model: tds.eq(5).text().trim(),       // 차종
-            nickname: tds.eq(6).text().trim(),    // 동호회닉네임
-            region: tds.eq(7).text().trim(),      // 수리희망지역
-            phone: tds.eq(8).text().trim()        // 연락처
+            latestText: tds.eq(9).text().trim(),     // 신청일 (10번째)
+            model: tds.eq(5).text().trim(),           // 차종 (6번째)
+            nickname: tds.eq(6).text().trim(),        // 닉네임 (7번째)
+            region: tds.eq(7).text().trim(),          // 지역 (8번째)
+            phone: tds.eq(8).text().trim()            // 연락처 (9번째)
         };
 
         return result;
