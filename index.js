@@ -53,7 +53,7 @@ async function loginAndFetchLatestText() {
     'Connection': 'keep-alive',
   }
 });
-        const html = estimateResponse.data;
+        const html = response.data;
 
         // 로그인 실패 추정 여부
         if (html.includes('로그인') || html.includes('비밀번호') || html.includes('mb_password')) {
