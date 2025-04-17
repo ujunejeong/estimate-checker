@@ -53,6 +53,7 @@ async function loginAndFetchLatestText() {
     'Connection': 'keep-alive',
   }
 });
+        console.log('📥 ESTIMATE HTML (preview):', response.data.slice(0, 1000));
         const html = response.data;
 
         // 로그인 실패 추정 여부
