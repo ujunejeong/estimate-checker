@@ -51,7 +51,8 @@ async function loginAndFetchLatestText() {
     'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8',
     'Accept-Encoding': 'gzip, deflate, br',
     'Connection': 'keep-alive',
-  }
+  },
+    validateStatus: null
 });
         console.log('📥 ESTIMATE HTML (preview):', response.data.slice(0, 1000));
         const html = response.data;
