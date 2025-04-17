@@ -43,7 +43,16 @@ async function loginAndFetchLatestText() {
         await client.get('https://estimate123.mycafe24.com/adm/'); // 🌟 세션 활성화를 위한 트리거
 
         console.log('📄 Fetching estimate list...');
-        const estimateResponse = await client.get(ESTIMATE_URL);
+        const response = await client.get(ESTIMATE_URL, {
+  headers: {
+    'Referer': 'https://estimate123.mycafe24.com/adm/',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Connection': 'keep-alive',
+  }
+});
         const html = estimateResponse.data;
 
         // 로그인 실패 추정 여부
