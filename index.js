@@ -31,15 +31,20 @@ async function loginAndFetchLatestText() {
 
         const response = await client.get(ESTIMATE_URL);
         const $ = cheerio.load(response.data);
-        const firstRow = $('tbody tr').first();
+
+        const firstRow = $('tbody tr').not('.sbn_img').first();  // 혹시 숨겨진 이미지용 tr 걸러냄
         const tds = firstRow.find('td');
 
+        console.log('✅ firstRow HTML:', firstRow.html());
+        console.log('✅ tds count:', tds.length);
+        console.log('✅ tds values:', tds.map((i, el) => $(el).text().trim()).get());
+
         const result = {
-        latestText: tds.eq(9).text().trim(),      // 신청일
-        model: tds.eq(5).text().trim(),           // 차종
-        nickname: tds.eq(6).text().trim(),        // 동호회닉네임
-        region: tds.eq(7).text().trim(),          // 수리희망지역
-        phone: tds.eq(8).text().trim()            // 연락처
+            latestText: tds.eq(9).text().trim(),  // 신청일
+            model: tds.eq(5).text().trim(),       // 차종
+            nickname: tds.eq(6).text().trim(),    // 동호회닉네임
+            region: tds.eq(7).text().trim(),      // 수리희망지역
+            phone: tds.eq(8).text().trim()        // 연락처
         };
 
         return result;
