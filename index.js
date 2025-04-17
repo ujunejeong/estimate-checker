@@ -39,9 +39,11 @@ async function loginAndFetchLatestText() {
         console.log('📍 Login redirect to:', loginResponse.request.res.responseUrl);
         console.log('🍪 쿠키 목록:', await jar.getCookies(LOGIN_URL));
 
+        console.log('✅ Admin main page 방문...');
+        await client.get('https://estimate123.mycafe24.com/adm/'); // 🌟 세션 활성화를 위한 트리거
+
         console.log('📄 Fetching estimate list...');
         const response = await client.get(ESTIMATE_URL);
-        const html = response.data;
 
         // 로그인 실패 추정 여부
         if (html.includes('로그인') || html.includes('비밀번호') || html.includes('mb_password')) {
