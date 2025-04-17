@@ -22,13 +22,14 @@ async function loginAndFetchLatestText() {
     try {
         console.log('🔐 Logging in...');
         await client.post(LOGIN_URL, new URLSearchParams({
-            mb_id: ADMIN_ID,
-            mb_password: ADMIN_PW
-        }), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
+    mb_id: ADMIN_ID,
+    mb_password: ADMIN_PW,
+    url: 'https://estimate123.mycafe24.com/adm/' // ← 이걸 POST 파라미터로 넣는 것이 핵심!
+}), {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+});
 
         console.log('📄 Fetching estimate list...');
         const response = await client.get(ESTIMATE_URL);
