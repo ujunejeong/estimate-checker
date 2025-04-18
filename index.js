@@ -37,18 +37,23 @@ async function loginAndFetchLatestText() {
     await page.goto(ESTIMATE_URL, { waitUntil: 'networkidle2' });
 
 const result = await page.evaluate(() => {
-  const row = document.querySelector('tbody tr:not(.sbn_img)');
-  if (!row) return null;
-  const cells = Array.from(row.querySelectorAll('td')).map(td => td.innerText.trim());
-  if (cells.length < 11) return null;  // latestText가 10번 인덱스이므로
+  const rows = Array.from(document.querySelectorAll('tbody tr:not(.sbn_img)'));
+  const estimates = [];
 
-  return {
-    latestText: cells[10],
-    model: cells[6],
-    nickname: cells[7],
-    region: cells[8],
-    phone: cells[9]
-  };
+  for (let row of rows.slice(0, 10)) { // 상위 10개 견적만
+    const cells = Array.from(row.querySelectorAll('td')).map(td => td.innerText.trim());
+    if (cells.length < 11) continue;
+
+    estimates.push({
+      latestText: cells[10],
+      model: cells[6],
+      nickname: cells[7],
+      region: cells[8],
+      phone: cells[9]
+    });
+  }
+
+  return estimates;
 });
 
     await browser.close();
