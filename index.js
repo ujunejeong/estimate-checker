@@ -49,12 +49,12 @@ async function loginAndFetchLatestText() {
     console.log('📄 Fetching estimate list...');
     const response = await client.get(ESTIMATE_URL, {
       headers: {
-        Referer: 'https://estimate123.mycafe24.com/adm/index.php',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
+        Referer: 'https://estimate123.mycafe24.com/bbs/login.php?url=https%3A%2F%2Festimate123.mycafe24.com%2Fadm%2F',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Connection': 'keep-alive',
       },
       validateStatus: null
     });
