@@ -36,19 +36,20 @@ async function loginAndFetchLatestText() {
     console.log('✅ Logged in, navigating to estimate page...');
     await page.goto(ESTIMATE_URL, { waitUntil: 'networkidle2' });
 
-    const result = await page.evaluate(() => {
-      const row = document.querySelector('tbody tr:not(.sbn_img)');
-      if (!row) return null;
-      const cells = Array.from(row.querySelectorAll('td')).map(td => td.innerText.trim());
-      if (cells.length < 10) return null;
-      return {
-        latestText: cells[9],
-        model: cells[5],
-        nickname: cells[6],
-        region: cells[7],
-        phone: cells[8]
-      };
-    });
+const result = await page.evaluate(() => {
+  const row = document.querySelector('tbody tr:not(.sbn_img)');
+  if (!row) return null;
+  const cells = Array.from(row.querySelectorAll('td')).map(td => td.innerText.trim());
+  if (cells.length < 11) return null;  // latestText가 10번 인덱스이므로
+
+  return {
+    latestText: cells[10],
+    model: cells[6],
+    nickname: cells[7],
+    region: cells[8],
+    phone: cells[9]
+  };
+});
 
     await browser.close();
     return result;
