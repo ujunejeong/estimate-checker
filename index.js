@@ -44,6 +44,10 @@ const result = await page.evaluate(() => {
     const cells = Array.from(row.querySelectorAll('td')).map(td => td.innerText.trim());
     if (cells.length < 11) continue;
 
+    const imageLinks = Array.from(row.querySelectorAll('td a._sbn_img_view'))
+  .map(a => a.getAttribute('href'))
+  .filter(Boolean);
+
     estimates.push({
       latestText: cells[10],
       model: cells[6],
