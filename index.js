@@ -49,7 +49,8 @@ const result = await page.evaluate(() => {
       model: cells[6],
       nickname: cells[7],
       region: cells[8],
-      phone: cells[9]
+      phone: cells[9],
+      images: imageLinks
     });
   }
 
